@@ -21,6 +21,7 @@ func ConnectDB() *mongo.Client  {
         log.Fatal(err)
     }
 
+    
     err = client.Ping(ctx, nil)
     if err != nil {
         log.Fatal(err)
@@ -31,6 +32,7 @@ func ConnectDB() *mongo.Client  {
 
 
 var DB *mongo.Client = ConnectDB()
+
 
 func GetCollection(client *mongo.Client, collectionName string) *mongo.Collection {
     collection := client.Database("golangAPI").Collection(collectionName)
