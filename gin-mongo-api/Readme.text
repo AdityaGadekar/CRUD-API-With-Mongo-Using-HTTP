@@ -1,0 +1,69 @@
+#ERROR = package gin-mongo-api/routes is not in GOROOT (C:\Program Files\Go\src\gin-mongo-api\routes)  
+Resolution steps
+1 check go path - go env GOPATH 
+2 check go root - go env GOROOT
+3 Create src folder in go root
+4 Move project folder to src folder
+5 delete previous go mod and go.sum files
+6 We need to install the required dependencies with:
+  cmd - go get -u github.com/gorilla/mux go.mongodb.org/mongo-driver/mongo github.com/joho/godotenv github.com/go-playground/validator/v10
+  <github.com/gorilla/mux is a package for building web servers.
+  go.mongodb.org/mongo-driver/mongo is a driver for connecting to MongoDB.
+  github.com/joho/godotenv is a library for managing environment variable.
+  github.com/go-playground/validator/v10 is a library for validating structs and fields>
+7 run again go mod init <folderName>
+8 go mod tidy
+9 go run main.go
+
+#Project struture
+1 configs is for modularizing project configuration files
+2 controllers is for modularizing application logics.
+3 models is for modularizing data and database logics.
+4 responses is for modularizing files describing the response we want our API to give. 
+  This will become clearer later on.
+5 routes is for modularizing URL pattern and handler information.
+
+
+#Authetication with mongodb\Setup Env variable
+1 Create .env files
+2 Add link brought from mongodb online database <mongodb+srv://<username>:<password>@cluster0.99ebh.mongodb.net/?retryWrites=true&w=majority>
+
+#Load Environment Variable
+Need to create a helper function to load the environment variable 
+using the github.com/joho/godotenv library we installed earlier. 
+To do this, we need to navigate to the configs folder and in this folder,
+create an env.go file
+
+#Connecting to MongoDB
+Need to navigate to the configs folder and in this folder, 
+create a setup.go file
+Add - "mux-mongo-api/configs" in import section of main.go
+
+#Setup API Route Handler and Response Type
+Route Handler - need to create a user_route.go file inside the routes folder to manage all the user-related routes in our application
+Add - "mux-mongo-api/routes" in import sectionof main.go
+
+#Response Type
+Need to create a reusable struct to describe our API’s response. To do this, 
+navigate to the responses folder and in this folder, 
+create a user_response.go
+
+#Creating REST API
+Need a model to represent our application data. To do this,
+we need to navigate to the models folder, and in this folder, 
+create a user_model.go
+
+#Creating GET/PUT/POST/DELETE User Endpoint
+Create GET/PUT/POST/DELETE User Endpoint in user_controller.go
+
+#run main.go file
+Successfull output will look like
+Connected to MongoDB
+
+#Fire request on POSTMAN
+POST - http://localhost:6000/users
+{
+    "Name": "ABC",
+    "location":"XYZ",
+    "title":"PQR"
+}
